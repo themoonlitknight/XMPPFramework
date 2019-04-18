@@ -11,7 +11,6 @@
 
 NSString *const XMPPDiscoverItemsNamespace = @"http://jabber.org/protocol/disco#items";
 NSString *const XMPPMUCErrorDomain = @"XMPPMUCErrorDomain";
-NSString *const XMPPConferenceXmlns = @"jabber:x:conference";
 
 @interface XMPPMUC()
 {
@@ -56,8 +55,8 @@ NSString *const XMPPConferenceXmlns = @"jabber:x:conference";
   XMPPLogTrace();
 
   dispatch_block_t block = ^{ @autoreleasepool {
-    [self->xmppIDTracker removeAllIDs];
-    self->xmppIDTracker = nil;
+    [xmppIDTracker removeAllIDs];
+    xmppIDTracker = nil;
   }};
 
   if (dispatch_get_specific(moduleQueueTag))
@@ -88,7 +87,7 @@ NSString *const XMPPConferenceXmlns = @"jabber:x:conference";
 	
 	dispatch_block_t block = ^{ @autoreleasepool {
 		
-		result = [self->rooms containsObject:bareFrom];
+		result = [rooms containsObject:bareFrom];
 		
 	}};
 	
@@ -129,23 +128,23 @@ NSString *const XMPPConferenceXmlns = @"jabber:x:conference";
   // This is a public method, so it may be invoked on any thread/queue.
 
   dispatch_block_t block = ^{ @autoreleasepool {
-    if (self->hasRequestedServices) return; // We've already requested services
+    if (hasRequestedServices) return; // We've already requested services
 
-    NSString *toStr = self->xmppStream.myJID.domain;
+    NSString *toStr = xmppStream.myJID.domain;
     NSXMLElement *query = [NSXMLElement elementWithName:@"query"
                                                   xmlns:XMPPDiscoverItemsNamespace];
     XMPPIQ *iq = [XMPPIQ iqWithType:@"get"
                                  to:[XMPPJID jidWithString:toStr]
-                          elementID:[self->xmppStream generateUUID]
+                          elementID:[xmppStream generateUUID]
                               child:query];
 
-    [self->xmppIDTracker addElement:iq
+    [xmppIDTracker addElement:iq
                        target:self
                      selector:@selector(handleDiscoverServicesQueryIQ:withInfo:)
                       timeout:60];
 
-    [self->xmppStream sendElement:iq];
-	self->hasRequestedServices = YES;
+    [xmppStream sendElement:iq];
+    hasRequestedServices = YES;
   }};
 
   if (dispatch_get_specific(moduleQueueTag))
@@ -176,24 +175,24 @@ NSString *const XMPPConferenceXmlns = @"jabber:x:conference";
     return NO;
 
   dispatch_block_t block = ^{ @autoreleasepool {
-    if (self->hasRequestedRooms) return; // We've already requested rooms
+    if (hasRequestedRooms) return; // We've already requested rooms
 
     NSXMLElement *query = [NSXMLElement elementWithName:@"query"
                                                   xmlns:XMPPDiscoverItemsNamespace];
     XMPPIQ *iq = [XMPPIQ iqWithType:@"get"
                                  to:[XMPPJID jidWithString:serviceName]
-                          elementID:[self->xmppStream generateUUID]
+                          elementID:[xmppStream generateUUID]
                               child:query];
 
-    [self->xmppIDTracker addElement:iq
+    [xmppIDTracker addElement:iq
                        target:self
                      selector:@selector(handleDiscoverRoomsQueryIQ:withInfo:)
                       timeout:60];
 
-    [self->xmppStream sendElement:iq];
-    self->hasRequestedRooms = YES;
+    [xmppStream sendElement:iq];
+    hasRequestedRooms = YES;
   }};
-	
+
   if (dispatch_get_specific(moduleQueueTag))
     block();
   else
@@ -222,7 +221,7 @@ NSString *const XMPPConferenceXmlns = @"jabber:x:conference";
                                                                        withDefaultValue:0]
                                        userInfo:dict];
 
-      [self->multicastDelegate xmppMUCFailedToDiscoverServices:self
+      [multicastDelegate xmppMUCFailedToDiscoverServices:self
                                                withError:error];
       return;
     }
@@ -231,8 +230,8 @@ NSString *const XMPPConferenceXmlns = @"jabber:x:conference";
                                        xmlns:XMPPDiscoverItemsNamespace];
 
     NSArray *items = [query elementsForName:@"item"];
-    [self->multicastDelegate xmppMUC:self didDiscoverServices:items];
-    self->hasRequestedServices = NO; // Set this back to NO to allow for future requests
+    [multicastDelegate xmppMUC:self didDiscoverServices:items];
+    hasRequestedServices = NO; // Set this back to NO to allow for future requests
   }};
 
   if (dispatch_get_specific(moduleQueueTag))
@@ -257,9 +256,9 @@ NSString *const XMPPConferenceXmlns = @"jabber:x:conference";
                                            code:[errorElem attributeIntegerValueForName:@"code"
                                                                        withDefaultValue:0]
                                        userInfo:dict];
-		[self->multicastDelegate     xmppMUC:self
-		failedToDiscoverRoomsForServiceNamed:serviceName
-								   withError:error];
+      [multicastDelegate     xmppMUC:self
+failedToDiscoverRoomsForServiceNamed:serviceName
+                           withError:error];
       return;
     }
 
@@ -267,10 +266,10 @@ NSString *const XMPPConferenceXmlns = @"jabber:x:conference";
                                        xmlns:XMPPDiscoverItemsNamespace];
 
     NSArray *items = [query elementsForName:@"item"];
-    [self->multicastDelegate xmppMUC:self
+    [multicastDelegate xmppMUC:self
               didDiscoverRooms:items
                forServiceNamed:serviceName];
-    self->hasRequestedRooms = NO; // Set this back to NO to allow for future requests
+    hasRequestedRooms = NO; // Set this back to NO to allow for future requests
   }};
 
   if (dispatch_get_specific(moduleQueueTag))
@@ -309,7 +308,7 @@ NSString *const XMPPConferenceXmlns = @"jabber:x:conference";
 		dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
 		dispatch_after(popTime, moduleQueue, ^{ @autoreleasepool {
 			
-			[self->rooms removeObject:roomJID];
+			[rooms removeObject:roomJID];
 		}});
 	}
 }
@@ -374,7 +373,7 @@ NSString *const XMPPConferenceXmlns = @"jabber:x:conference";
 	NSXMLElement * invite  = [x elementForName:@"invite"];
 	NSXMLElement * decline = [x elementForName:@"decline"];
 	
-	NSXMLElement * directInvite = [message elementForName:@"x" xmlns:XMPPConferenceXmlns];
+	NSXMLElement * directInvite = [message elementForName:@"x" xmlns:@"jabber:x:conference"];
     
     XMPPJID * roomJID = [message from];
 	

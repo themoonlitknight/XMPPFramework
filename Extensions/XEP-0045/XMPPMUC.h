@@ -19,11 +19,6 @@
  *    and provides an efficient query to see if a presence or message element is targeted at a room.
  *  - It listens for MUC room invitations sent from other users.
 **/
-NS_ASSUME_NONNULL_BEGIN
-
-/** jabber:x:conference */
-extern NSString *const XMPPConferenceXmlns;
-
 @interface XMPPMUC : XMPPModule
 {
 /*	Inherited from XMPPModule:
@@ -33,9 +28,9 @@ extern NSString *const XMPPConferenceXmlns;
 	dispatch_queue_t moduleQueue;
  */
 	
-    NSMutableSet<XMPPJID*> *rooms;
+	NSMutableSet *rooms;
 
-    XMPPIDTracker * _Nullable xmppIDTracker;
+  XMPPIDTracker *xmppIDTracker;
 }
 
 /* Inherited from XMPPModule:
@@ -98,7 +93,7 @@ extern NSString *const XMPPConferenceXmlns;
 *
 *                 <item jid='chat.shakespeare.lit' name='Chatroom Service'/>
 */
-- (void)xmppMUC:(XMPPMUC *)sender didDiscoverServices:(NSArray<NSXMLElement*> *)services;
+- (void)xmppMUC:(XMPPMUC *)sender didDiscoverServices:(NSArray *)services;
 
 /**
 * Implement this method when calling [mucInstanse discoverServices]. It will be invoked if the request
@@ -134,4 +129,3 @@ extern NSString *const XMPPConferenceXmlns;
 - (void)xmppMUC:(XMPPMUC *)sender failedToDiscoverRoomsForServiceNamed:(NSString *)serviceName withError:(NSError *)error;
 
 @end
-NS_ASSUME_NONNULL_END

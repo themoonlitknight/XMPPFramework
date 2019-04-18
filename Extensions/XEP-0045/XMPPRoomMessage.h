@@ -3,35 +3,35 @@
 @class XMPPJID;
 @class XMPPMessage;
 
-NS_ASSUME_NONNULL_BEGIN
+
 @protocol XMPPRoomMessage <NSObject>
 
 /**
  * The raw message that was sent / received.
 **/
-@property (nonatomic, readonly) XMPPMessage *message;
+- (XMPPMessage *)message;
 
 /**
  * The JID of the MUC room.
 **/
-@property (nonatomic, readonly) XMPPJID *roomJID;
+- (XMPPJID *)roomJID;
 
 /**
  * Who sent the message.
  * A typical MUC room jid is of the form "room_name@conference.domain.tld/some_nickname".
 **/
-@property (nonatomic, readonly) XMPPJID *jid;
+- (XMPPJID *)jid;
 
 /**
  * The nickname of the user who sent the message.
  * This is a convenience method for [jid resource].
 **/
-@property (nonatomic, readonly) NSString *nickname;
+- (NSString *)nickname;
 
 /**
  * Convenience method to access the body of the message.
 **/
-@property (nonatomic, readonly) NSString *body;
+- (NSString *)body;
 
 /**
  * When the message was sent / received (as recorded by us).
@@ -41,19 +41,18 @@ NS_ASSUME_NONNULL_BEGIN
  * This is the case when first joining a room, and downloading the discussion history.
  * In such a case, the localTimestamp will be a reflection of the serverTimestamp.
 **/
-@property (nonatomic, readonly) NSDate *localTimestamp;
+- (NSDate *)localTimestamp;
 
 /**
  * When the message was sent / received (as recorded by the server).
  * 
  * Only set when the server includes a delayedDelivery timestamp within the message.
 **/
-@property (nonatomic, readonly, nullable) NSDate *remoteTimestamp;
+- (NSDate *)remoteTimestamp;
 
 /**
  * Whether or not the message was sent by us.
 **/
-@property (nonatomic, readonly) BOOL isFromMe;
+- (BOOL)isFromMe;
 
 @end
-NS_ASSUME_NONNULL_END

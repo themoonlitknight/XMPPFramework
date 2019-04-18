@@ -3,30 +3,30 @@
 @class XMPPJID;
 @class XMPPPresence;
 
-NS_ASSUME_NONNULL_BEGIN
+
 @protocol XMPPRoomOccupant <NSObject>
 
 /**
  * Most recent presence message from occupant.
 **/
-@property (nonatomic, readonly) XMPPPresence *presence;
+- (XMPPPresence *)presence;
 
 /**
  * The MUC room the occupant is associated with.
 **/
-@property (nonatomic, readonly) XMPPJID *roomJID;
+- (XMPPJID *)roomJID;
 
 /**
  * The JID of the occupant as reported by the room.
  * A typical MUC room will use JIDs of the form: "room_name@conference.domain.tl/some_nickname".
 **/
-@property (nonatomic, readonly) XMPPJID *jid;
+- (XMPPJID *)jid;
 
 /**
  * The nickname of the user.
  * In other words, the resource portion of the occupants JID.
 **/
-@property (nonatomic, readonly) NSString *nickname;
+- (NSString *)nickname;
 
 /**
  * The 'role' and 'affiliation' of the occupant within the MUC room.
@@ -43,8 +43,8 @@ NS_ASSUME_NONNULL_BEGIN
  * 
  * For more information, please see XEP-0045.
 **/
-@property (nonatomic, readonly, nullable) NSString *role;
-@property (nonatomic, readonly, nullable) NSString *affiliation;
+- (NSString *)role;
+- (NSString *)affiliation;
 
 /**
  * If the MUC room is non-anonymous, the real JID of the user will be broadcast.
@@ -52,7 +52,6 @@ NS_ASSUME_NONNULL_BEGIN
  * An anonymous room uses JID's of the form: "room_name@conference.domain.tld/some_nickname".
  * A non-anonymous room also includes the occupants real full JID in the presence broadcast.
 **/
-@property (nonatomic, readonly, nullable) XMPPJID *realJID;
+- (XMPPJID *)realJID;
 
 @end
-NS_ASSUME_NONNULL_END

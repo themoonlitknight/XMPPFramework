@@ -1,6 +1,6 @@
 #import "XMPPRoom.h"
 
-NS_ASSUME_NONNULL_BEGIN
+
 @interface XMPPRoom (PrivateInternalAPI)
 
 /**
@@ -12,9 +12,8 @@ NS_ASSUME_NONNULL_BEGIN
  *       The parent's dispatch queue is passed in the configureWithParent:queue: method,
  *       or may be obtained via the moduleQueue method below.
 **/
-@property (nonatomic, readonly) GCDMulticastDelegate *multicastDelegate;
+- (GCDMulticastDelegate *)multicastDelegate;
 
-@property (nonatomic, readonly) dispatch_queue_t moduleQueue;
+- (dispatch_queue_t)moduleQueue;
 
 @end
-NS_ASSUME_NONNULL_END

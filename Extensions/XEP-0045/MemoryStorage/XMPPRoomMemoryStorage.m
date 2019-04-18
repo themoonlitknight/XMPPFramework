@@ -455,7 +455,7 @@
 		
 		dispatch_sync(parentQueue, ^{ @autoreleasepool {
 			
-			occupant = [self->occupantsDict[jid] copy];
+			occupant = [occupantsDict[jid] copy];
 		}});
 		
 		return occupant;
@@ -482,7 +482,7 @@
 		
 		dispatch_sync(parentQueue, ^{ @autoreleasepool {
 			
-			result = [[NSArray alloc] initWithArray:self->messages copyItems:YES];
+			result = [[NSArray alloc] initWithArray:messages copyItems:YES];
 		}});
 		
 		return result;
@@ -509,7 +509,7 @@
 		
 		dispatch_sync(parentQueue, ^{ @autoreleasepool {
 			
-			result = [[NSArray alloc] initWithArray:self->occupantsArray copyItems:YES];
+			result = [[NSArray alloc] initWithArray:occupantsArray copyItems:YES];
 		}});
 		
 		return result;
@@ -537,8 +537,8 @@
 		
 		dispatch_sync(parentQueue, ^{ @autoreleasepool {
 			
-			[self->messages sortUsingSelector:@selector(compare:)];
-			result = [[NSArray alloc] initWithArray:self->messages copyItems:YES];
+			[messages sortUsingSelector:@selector(compare:)];
+			result = [[NSArray alloc] initWithArray:messages copyItems:YES];
 		}});
 		
 		return result;
@@ -566,8 +566,8 @@
 		
 		dispatch_sync(parentQueue, ^{ @autoreleasepool {
 			
-			[self->occupantsArray sortUsingSelector:@selector(compare:)];
-			result = [[NSArray alloc] initWithArray:self->occupantsArray copyItems:YES];
+			[occupantsArray sortUsingSelector:@selector(compare:)];
+			result = [[NSArray alloc] initWithArray:occupantsArray copyItems:YES];
 		}});
 		
 		return result;

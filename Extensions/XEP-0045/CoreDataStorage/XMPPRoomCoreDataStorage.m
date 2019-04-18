@@ -101,7 +101,7 @@ static XMPPRoomCoreDataStorage *sharedInstance;
 	__block NSString *result = nil;
 	
 	dispatch_block_t block = ^{
-		result = self->messageEntityName;
+		result = messageEntityName;
 	};
 	
 	if (dispatch_get_specific(storageQueueTag))
@@ -115,7 +115,7 @@ static XMPPRoomCoreDataStorage *sharedInstance;
 - (void)setMessageEntityName:(NSString *)newMessageEntityName
 {
 	dispatch_block_t block = ^{
-		self->messageEntityName = newMessageEntityName;
+		messageEntityName = newMessageEntityName;
 	};
 	
 	if (dispatch_get_specific(storageQueueTag))
@@ -129,7 +129,7 @@ static XMPPRoomCoreDataStorage *sharedInstance;
 	__block NSString *result = nil;
 	
 	dispatch_block_t block = ^{
-		result = self->occupantEntityName;
+		result = occupantEntityName;
 	};
 	
 	if (dispatch_get_specific(storageQueueTag))
@@ -143,7 +143,7 @@ static XMPPRoomCoreDataStorage *sharedInstance;
 - (void)setOccupantEntityName:(NSString *)newOccupantEntityName
 {
 	dispatch_block_t block = ^{
-		self->occupantEntityName = newOccupantEntityName;
+		occupantEntityName = newOccupantEntityName;
 	};
 	
 	if (dispatch_get_specific(storageQueueTag))
@@ -157,7 +157,7 @@ static XMPPRoomCoreDataStorage *sharedInstance;
 	__block NSTimeInterval result = 0;
 	
 	dispatch_block_t block = ^{
-		result = self->maxMessageAge;
+		result = maxMessageAge;
 	};
 	
 	if (dispatch_get_specific(storageQueueTag))
@@ -172,10 +172,10 @@ static XMPPRoomCoreDataStorage *sharedInstance;
 {
 	dispatch_block_t block = ^{ @autoreleasepool {
 		
-		NSTimeInterval oldMaxMessageAge = self->maxMessageAge;
+		NSTimeInterval oldMaxMessageAge = maxMessageAge;
 		NSTimeInterval newMaxMessageAge = age;
 		
-		self->maxMessageAge = age;
+		maxMessageAge = age;
 		
 		// There are several cases we need to handle here.
 		// 
@@ -221,7 +221,7 @@ static XMPPRoomCoreDataStorage *sharedInstance;
 		{
 			[self performDelete];
 			
-			if (self->deleteTimer)
+			if (deleteTimer)
 				[self updateDeleteTimer];
 			else
 				[self createAndStartDeleteTimer];
@@ -239,7 +239,7 @@ static XMPPRoomCoreDataStorage *sharedInstance;
 	__block NSTimeInterval result = 0;
 	
 	dispatch_block_t block = ^{
-		result = self->deleteInterval;
+		result = deleteInterval;
 	};
 	
 	if (dispatch_get_specific(storageQueueTag))
@@ -254,7 +254,7 @@ static XMPPRoomCoreDataStorage *sharedInstance;
 {
 	dispatch_block_t block = ^{ @autoreleasepool {
 		
-		self->deleteInterval = interval;
+		deleteInterval = interval;
 		
 		// There are several cases we need to handle here.
 		// 
@@ -269,9 +269,9 @@ static XMPPRoomCoreDataStorage *sharedInstance;
 		// 4. If the deleteInterval decreased, then we need to reset the timer so that it fires at an earlier date.
 		//    (Plus we might need to do an immediate delete.)
 		
-		if (self->deleteInterval > 0.0)
+		if (deleteInterval > 0.0)
 		{
-			if (self->deleteTimer == NULL)
+			if (deleteTimer == NULL)
 			{
 				// Handles #2
 				// 
@@ -291,7 +291,7 @@ static XMPPRoomCoreDataStorage *sharedInstance;
 				[self updateDeleteTimer];
 			}
 		}
-		else if (self->deleteTimer)
+		else if (deleteTimer)
 		{
 			// Handles #1
 			
@@ -309,7 +309,7 @@ static XMPPRoomCoreDataStorage *sharedInstance;
 {
 	dispatch_block_t block = ^{ @autoreleasepool {
 		
-		[self->pausedMessageDeletion addObject:[roomJID bareJID]];
+		[pausedMessageDeletion addObject:[roomJID bareJID]];
 	}};
 	
 	if (dispatch_get_specific(storageQueueTag))
@@ -322,7 +322,7 @@ static XMPPRoomCoreDataStorage *sharedInstance;
 {
 	dispatch_block_t block = ^{ @autoreleasepool {
 		
-		[self->pausedMessageDeletion removeObject:[roomJID bareJID]];
+		[pausedMessageDeletion removeObject:[roomJID bareJID]];
 		[self performDelete];
 	}};
 	
@@ -818,11 +818,11 @@ static XMPPRoomCoreDataStorage *sharedInstance;
 			NSString *streamBareJidStr = [[self myJIDForXMPPStream:xmppStream] bare];
 			
 			NSString *predicateFormat = @"roomJIDStr == %@ AND streamBareJidStr == %@";
-			predicate = [NSPredicate predicateWithFormat:predicateFormat, roomJID.bare, streamBareJidStr];
+			predicate = [NSPredicate predicateWithFormat:predicateFormat, roomJID, streamBareJidStr];
 		}
 		else
 		{
-			predicate = [NSPredicate predicateWithFormat:@"roomJIDStr == %@", roomJID.bare];
+			predicate = [NSPredicate predicateWithFormat:@"roomJIDStr == %@", roomJID];
 		}
 		
 		NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"localTimestamp" ascending:NO];
