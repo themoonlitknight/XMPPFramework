@@ -30,19 +30,21 @@ static NSString *const XMPPMUCOwnerNamespace = @"http://jabber.org/protocol/muc#
  	
 	__strong XMPPJID *roomJID;
 	
-	__strong XMPPJID *myRoomJID;
-	__strong NSString *myNickname;
-	__strong NSString *myOldNickname;
+	__strong XMPPJID * _Nullable myRoomJID;
+	__strong NSString * _Nullable myNickname;
+	__strong NSString * _Nullable myOldNickname;
 	
-	__strong NSString *roomSubject;
+	__strong NSString * _Nullable roomSubject;
 	
-	XMPPIDTracker *responseTracker;
+	XMPPIDTracker * _Nullable responseTracker;
 	
 	uint16_t state;
 }
 
-- (id)initWithRoomStorage:(id <XMPPRoomStorage>)storage jid:(XMPPJID *)roomJID;
-- (id)initWithRoomStorage:(id <XMPPRoomStorage>)storage jid:(XMPPJID *)roomJID dispatchQueue:(dispatch_queue_t)queue;
+- (instancetype) init NS_UNAVAILABLE;
+- (instancetype)initWithDispatchQueue:(nullable dispatch_queue_t)queue NS_UNAVAILABLE;
+- (instancetype)initWithRoomStorage:(id <XMPPRoomStorage>)storage jid:(XMPPJID *)roomJID;
+- (instancetype)initWithRoomStorage:(id <XMPPRoomStorage>)storage jid:(XMPPJID *)roomJID dispatchQueue:(nullable dispatch_queue_t)queue;
 
 /* Inherited from XMPPModule:
 
@@ -61,16 +63,16 @@ static NSString *const XMPPMUCOwnerNamespace = @"http://jabber.org/protocol/muc#
 
 #pragma mark Properties
 
-@property (readonly) id <XMPPRoomStorage> xmppRoomStorage;
+@property (nonatomic, readonly) id <XMPPRoomStorage> xmppRoomStorage;
 
-@property (readonly) XMPPJID * roomJID;     // E.g. xmpp-development@conference.deusty.com
+@property (nonatomic, readonly) XMPPJID * roomJID;     // E.g. xmpp-development@conference.deusty.com
 
-@property (readonly) XMPPJID * myRoomJID;   // E.g. xmpp-development@conference.deusty.com/robbiehanson
-@property (readonly) NSString * myNickname; // E.g. robbiehanson
+@property (atomic, readonly, nullable) XMPPJID * myRoomJID;   // E.g. xmpp-development@conference.deusty.com/robbiehanson
+@property (atomic, readonly, nullable) NSString * myNickname; // E.g. robbiehanson
 
-@property (readonly) NSString *roomSubject;
+@property (atomic, readonly, nullable) NSString *roomSubject;
 
-@property (readonly) BOOL isJoined;
+@property (atomic, readonly) BOOL isJoined;
 
 #pragma mark Room Lifecycle
 
@@ -100,7 +102,7 @@ static NSString *const XMPPMUCOwnerNamespace = @"http://jabber.org/protocol/muc#
  * @see fetchConfigurationForm
  * @see configureRoomUsingOptions:
 **/
-- (void)joinRoomUsingNickname:(NSString *)desiredNickname history:(NSXMLElement *)history;
+- (void)joinRoomUsingNickname:(NSString *)desiredNickname history:(nullable NSXMLElement *)history;
 - (void)joinRoomUsingNickname:(NSString *)desiredNickname history:(NSXMLElement *)history password:(NSString *)passwd;
 
 /**
@@ -118,7 +120,7 @@ static NSString *const XMPPMUCOwnerNamespace = @"http://jabber.org/protocol/muc#
 /**
  * Pass nil to accept the default configuration.
 **/
-- (void)configureRoomUsingOptions:(NSXMLElement *)roomConfigForm;
+- (void)configureRoomUsingOptions:(nullable NSXMLElement *)roomConfigForm;
 
 - (void)leaveRoom;
 - (void)destroyRoom;
@@ -128,7 +130,7 @@ static NSString *const XMPPMUCOwnerNamespace = @"http://jabber.org/protocol/muc#
 - (void)changeNickname:(NSString *)newNickname;
 - (void)changeRoomSubject:(NSString *)newRoomSubject;
 
-- (void)inviteUser:(XMPPJID *)jid withMessage:(NSString *)invitationMessage;
+- (void)inviteUser:(XMPPJID *)jid withMessage:(nullable NSString *)inviteMessageStr;
 
 - (void)sendMessage:(XMPPMessage *)message;
 
@@ -164,10 +166,10 @@ static NSString *const XMPPMUCOwnerNamespace = @"http://jabber.org/protocol/muc#
  * @return The id of the XMPPIQ that was sent.
  *         This may be used to match multiple change requests with the responses in xmppRoom:didEditPrivileges:.
 **/
-- (NSString *)editRoomPrivileges:(NSArray *)items;
+- (NSString *)editRoomPrivileges:(NSArray<NSXMLElement*> *)items;
 
-+ (NSXMLElement *)itemWithAffiliation:(NSString *)affiliation jid:(XMPPJID *)jid;
-+ (NSXMLElement *)itemWithRole:(NSString *)role jid:(XMPPJID *)jid;
++ (NSXMLElement *)itemWithAffiliation:(nullable NSString *)affiliation jid:(nullable XMPPJID *)jid;
++ (NSXMLElement *)itemWithRole:(nullable NSString *)role jid:(nullable XMPPJID *)jid;
 
 @end
 

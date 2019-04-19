@@ -36,7 +36,7 @@ enum XMPPRoomState
 
 @implementation XMPPRoom
 
-- (id)init
+- (instancetype) init
 {
 	// This will cause a crash - it's designed to.
 	// Only the init methods listed in XMPPRoom.h are supported.
@@ -44,7 +44,7 @@ enum XMPPRoomState
 	return [self initWithRoomStorage:nil jid:nil dispatchQueue:NULL];
 }
 
-- (id)initWithDispatchQueue:(dispatch_queue_t)queue
+- (instancetype)initWithDispatchQueue:(nullable dispatch_queue_t)queue
 {
 	// This will cause a crash - it's designed to.
 	// Only the init methods listed in XMPPRoom.h are supported.
@@ -52,15 +52,15 @@ enum XMPPRoomState
 	return [self initWithRoomStorage:nil jid:nil dispatchQueue:queue];
 }
 
-- (id)initWithRoomStorage:(id <XMPPRoomStorage>)storage jid:(XMPPJID *)aRoomJID
+- (instancetype)initWithRoomStorage:(id <XMPPRoomStorage>)storage jid:(XMPPJID *)roomJID
 {
-	return [self initWithRoomStorage:storage jid:aRoomJID dispatchQueue:NULL];
+	return [self initWithRoomStorage:storage jid:roomJID dispatchQueue:NULL];
 }
 
-- (id)initWithRoomStorage:(id <XMPPRoomStorage>)storage jid:(XMPPJID *)aRoomJID dispatchQueue:(dispatch_queue_t)queue
+- (instancetype)initWithRoomStorage:(id <XMPPRoomStorage>)storage jid:(XMPPJID *)roomJID dispatchQueue:(nullable dispatch_queue_t)queue;
 {
 	NSParameterAssert(storage != nil);
-	NSParameterAssert(aRoomJID != nil);
+	NSParameterAssert(roomJID != nil);
 	
 	if ((self = [super initWithDispatchQueue:queue]))
 	{
@@ -73,7 +73,7 @@ enum XMPPRoomState
 			XMPPLogError(@"%@: %@ - Unable to configure storage!", THIS_FILE, THIS_METHOD);
 		}
 		
-		roomJID = [aRoomJID bareJID];
+		roomJID = [roomJID bareJID];
 	}
 	return self;
 }
@@ -276,12 +276,12 @@ enum XMPPRoomState
 	return YES;
 }
 
-- (void)joinRoomUsingNickname:(NSString *)desiredNickname history:(NSXMLElement *)history
+- (void)joinRoomUsingNickname:(NSString *)desiredNickname history:(nullable NSXMLElement *)history;
 {
 	[self joinRoomUsingNickname:desiredNickname history:history password:nil];
 }
 
-- (void)joinRoomUsingNickname:(NSString *)desiredNickname history:(NSXMLElement *)history password:(NSString *)passwd
+- (void)joinRoomUsingNickname:(NSString *)desiredNickname history:(nullable NSXMLElement *)history password:(nullable NSString *)passwd;
 {
 	dispatch_block_t block = ^{ @autoreleasepool {
 		
@@ -412,7 +412,7 @@ enum XMPPRoomState
 	}
 }
 
-- (void)configureRoomUsingOptions:(NSXMLElement *)roomConfigForm
+- (void)configureRoomUsingOptions:(nullable NSXMLElement *)roomConfigForm;
 {
 	dispatch_block_t block = ^{ @autoreleasepool {
 		
@@ -834,7 +834,7 @@ enum XMPPRoomState
 	}
 }
 
-- (NSString *)editRoomPrivileges:(NSArray *)items
+- (NSString *)editRoomPrivileges:(NSArray<NSXMLElement*> *)items
 {
 	NSString *iqID = [xmppStream generateUUID];
 	
@@ -977,7 +977,7 @@ enum XMPPRoomState
 #pragma mark Messages
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-- (void)inviteUser:(XMPPJID *)jid withMessage:(NSString *)inviteMessageStr
+- (void)inviteUser:(XMPPJID *)jid withMessage:(nullable NSString *)inviteMessageStr;
 {
 	dispatch_block_t block = ^{ @autoreleasepool {
 		
@@ -1415,7 +1415,7 @@ enum XMPPRoomState
 #pragma mark Class Methods
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-+ (NSXMLElement *)itemWithAffiliation:(NSString *)affiliation jid:(XMPPJID *)jid
++ (NSXMLElement *)itemWithAffiliation:(nullable NSString *)affiliation jid:(nullable XMPPJID *)jid;
 {
 	NSXMLElement *item = [NSXMLElement elementWithName:@"item"];
 	
@@ -1428,7 +1428,7 @@ enum XMPPRoomState
 	return item;
 }
 
-+ (NSXMLElement *)itemWithRole:(NSString *)role jid:(XMPPJID *)jid
++ (NSXMLElement *)itemWithRole:(nullable NSString *)role jid:(nullable XMPPJID *)jid;
 {
 	NSXMLElement *item = [NSXMLElement elementWithName:@"item"];
 	
