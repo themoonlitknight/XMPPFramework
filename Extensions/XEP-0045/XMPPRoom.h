@@ -5,6 +5,8 @@
 
 #define _XMPP_ROOM_H
 
+NS_ASSUME_NONNULL_BEGIN
+
 @class XMPPIDTracker;
 @protocol XMPPRoomStorage;
 @protocol XMPPRoomDelegate;
@@ -103,7 +105,7 @@ static NSString *const XMPPMUCOwnerNamespace = @"http://jabber.org/protocol/muc#
  * @see configureRoomUsingOptions:
 **/
 - (void)joinRoomUsingNickname:(NSString *)desiredNickname history:(nullable NSXMLElement *)history;
-- (void)joinRoomUsingNickname:(NSString *)desiredNickname history:(NSXMLElement *)history password:(NSString *)passwd;
+- (void)joinRoomUsingNickname:(NSString *)desiredNickname history:(nullable NSXMLElement *)history password:(nullable NSString *)passwd;
 
 /**
  * There are two ways to configure a room.
@@ -252,7 +254,7 @@ static NSString *const XMPPMUCOwnerNamespace = @"http://jabber.org/protocol/muc#
 #pragma mark -
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-@protocol XMPPRoomDelegate <NSObject>
+@protocol XMPPRoomDelegate
 @optional
 
 - (void)xmppRoomDidCreate:(XMPPRoom *)sender;
@@ -336,3 +338,6 @@ static NSString *const XMPPMUCOwnerNamespace = @"http://jabber.org/protocol/muc#
 - (void)xmppRoom:(XMPPRoom *)sender occupantDidBecomeOwner:(XMPPJID *)occupantJID;
 
 @end
+
+NS_ASSUME_NONNULL_END
+
