@@ -1041,9 +1041,9 @@ extern const NSTimeInterval XMPPStreamTimeoutNone;
  * These methods are called after failing to send the respective XML elements over the stream.
  * This occurs when the stream gets disconnected before the element can get sent out.
 **/
-- (void)xmppStream:(XMPPStream *)sender didFailToSendIQ:(XMPPIQ *)iq error:(NSError *)error;
-- (void)xmppStream:(XMPPStream *)sender didFailToSendMessage:(XMPPMessage *)message error:(NSError *)error;
-- (void)xmppStream:(XMPPStream *)sender didFailToSendPresence:(XMPPPresence *)presence error:(NSError *)error;
+- (void)xmppStream:(XMPPStream *)sender didFailToSendIQ:(XMPPIQ *)iq error:(NSError *)error NS_SWIFT_NAME(xmppStream(_:didFailToSendIQ:error:));
+- (void)xmppStream:(XMPPStream *)sender didFailToSendMessage:(XMPPMessage *)message error:(NSError *)error NS_SWIFT_NAME(xmppStream(_:didFailToSendMessage:error:));
+- (void)xmppStream:(XMPPStream *)sender didFailToSendPresence:(XMPPPresence *)presence error:(NSError *)error NS_SWIFT_NAME(xmppStream(_:didFailToSendPresence:error:));
 
 /**
  * This method is called if the XMPP Stream's jid changes.
