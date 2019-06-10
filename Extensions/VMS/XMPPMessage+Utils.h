@@ -20,8 +20,8 @@
 - (void)forceBody;
 
 - (BOOL)hasVMSReceivedReceipt;
-- (NSDictionary*)vmsReceivedReceipts;
+- (NSDictionary<NSString*, NSDate*>*)vmsReceivedReceipts;
 - (BOOL)hasVMSReadReceipt;
-- (NSDictionary*)vmsReadReceipts;
+- (NSDictionary<NSString*, NSDate*>*)vmsReadReceipts;
 
 @end
