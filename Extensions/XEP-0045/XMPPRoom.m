@@ -52,30 +52,30 @@ enum XMPPRoomState
 	return [self initWithRoomStorage:nil jid:nil dispatchQueue:queue];
 }
 
-- (instancetype)initWithRoomStorage:(id <XMPPRoomStorage>)storage jid:(XMPPJID *)roomJID
+- (instancetype)initWithRoomStorage:(id <XMPPRoomStorage>)storage jid:(XMPPJID *)aRoomJID
 {
-	return [self initWithRoomStorage:storage jid:roomJID dispatchQueue:NULL];
+    return [self initWithRoomStorage:storage jid:aRoomJID dispatchQueue:NULL];
 }
 
-- (instancetype)initWithRoomStorage:(id <XMPPRoomStorage>)storage jid:(XMPPJID *)roomJID dispatchQueue:(nullable dispatch_queue_t)queue;
+- (instancetype)initWithRoomStorage:(id <XMPPRoomStorage>)storage jid:(XMPPJID *)aRoomJID dispatchQueue:(dispatch_queue_t)queue
 {
-	NSParameterAssert(storage != nil);
-	NSParameterAssert(roomJID != nil);
-	
-	if ((self = [super initWithDispatchQueue:queue]))
-	{
-		if ([storage configureWithParent:self queue:moduleQueue])
-		{
-			xmppRoomStorage = storage;
-		}
-		else
-		{
-			XMPPLogError(@"%@: %@ - Unable to configure storage!", THIS_FILE, THIS_METHOD);
-		}
-		
-		roomJID = [roomJID bareJID];
-	}
-	return self;
+    NSParameterAssert(storage != nil);
+    NSParameterAssert(aRoomJID != nil);
+    
+    if ((self = [super initWithDispatchQueue:queue]))
+    {
+        if ([storage configureWithParent:self queue:moduleQueue])
+        {
+            xmppRoomStorage = storage;
+        }
+        else
+        {
+            XMPPLogError(@"%@: %@ - Unable to configure storage!", THIS_FILE, THIS_METHOD);
+        }
+        
+        roomJID = [aRoomJID bareJID];
+    }
+    return self;
 }
 
 - (BOOL)activate:(XMPPStream *)aXmppStream
