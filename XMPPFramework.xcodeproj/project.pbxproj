@@ -1056,6 +1056,12 @@
 		DD855F951F74F2B000E12330 /* XMPPOutOfBandResourceMessaging.m in Sources */ = {isa = PBXBuildFile; fileRef = DD855F901F74F2B000E12330 /* XMPPOutOfBandResourceMessaging.m */; };
 		DD855F961F74F2B000E12330 /* XMPPOutOfBandResourceMessaging.m in Sources */ = {isa = PBXBuildFile; fileRef = DD855F901F74F2B000E12330 /* XMPPOutOfBandResourceMessaging.m */; };
 		FB9BD59220F3CD1B00B93A7E /* XMPPOutgoingFileTransfer.m in Sources */ = {isa = PBXBuildFile; fileRef = D9DCD12B1E6250920010D1C7 /* XMPPOutgoingFileTransfer.m */; };
+		FD65E9BB239FC63B002F2035 /* XMPPMUCSub.h in Headers */ = {isa = PBXBuildFile; fileRef = FD65E9B9239FC63B002F2035 /* XMPPMUCSub.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		FD65E9BC239FC63B002F2035 /* XMPPMUCSub.m in Sources */ = {isa = PBXBuildFile; fileRef = FD65E9BA239FC63B002F2035 /* XMPPMUCSub.m */; };
+		FD65E9BD239FD2F3002F2035 /* XMPPMUCSub.h in Headers */ = {isa = PBXBuildFile; fileRef = FD65E9B9239FC63B002F2035 /* XMPPMUCSub.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		FD65E9BE239FD2F3002F2035 /* XMPPMUCSub.m in Sources */ = {isa = PBXBuildFile; fileRef = FD65E9BA239FC63B002F2035 /* XMPPMUCSub.m */; };
+		FD65E9BF239FD2F4002F2035 /* XMPPMUCSub.h in Headers */ = {isa = PBXBuildFile; fileRef = FD65E9B9239FC63B002F2035 /* XMPPMUCSub.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		FD65E9C0239FD2F4002F2035 /* XMPPMUCSub.m in Sources */ = {isa = PBXBuildFile; fileRef = FD65E9BA239FC63B002F2035 /* XMPPMUCSub.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1799,6 +1805,8 @@
 		DD2AD6DE1F84B49200E0FED2 /* XMPPManagedMessaging.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XMPPManagedMessaging.m; sourceTree = "<group>"; };
 		DD855F8F1F74F2B000E12330 /* XMPPOutOfBandResourceMessaging.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XMPPOutOfBandResourceMessaging.h; sourceTree = "<group>"; };
 		DD855F901F74F2B000E12330 /* XMPPOutOfBandResourceMessaging.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XMPPOutOfBandResourceMessaging.m; sourceTree = "<group>"; };
+		FD65E9B9239FC63B002F2035 /* XMPPMUCSub.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMPPMUCSub.h; sourceTree = "<group>"; };
+		FD65E9BA239FC63B002F2035 /* XMPPMUCSub.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XMPPMUCSub.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -2392,6 +2400,7 @@
 		D9DCD1701E6250930010D1C7 /* XEP-0045 */ = {
 			isa = PBXGroup;
 			children = (
+				FD65E9B8239FC63B002F2035 /* MUC-Sub */,
 				D9DCD1711E6250930010D1C7 /* CoreDataStorage */,
 				D9DCD17A1E6250930010D1C7 /* HybridStorage */,
 				D9DCD1841E6250930010D1C7 /* MemoryStorage */,
@@ -2992,6 +3001,16 @@
 			path = "Managed Messaging";
 			sourceTree = "<group>";
 		};
+		FD65E9B8239FC63B002F2035 /* MUC-Sub */ = {
+			isa = PBXGroup;
+			children = (
+				FD65E9B9239FC63B002F2035 /* XMPPMUCSub.h */,
+				FD65E9BA239FC63B002F2035 /* XMPPMUCSub.m */,
+			);
+			name = "MUC-Sub";
+			path = "Extensions/MUC-Sub";
+			sourceTree = SOURCE_ROOT;
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -3160,6 +3179,7 @@
 				0D44BB711E537110000930E0 /* XMPPStringPrep.h in Headers */,
 				0D44BB1D1E5370ED000930E0 /* XMPPParser.h in Headers */,
 				0D44BB131E5370ED000930E0 /* XMPPInternal.h in Headers */,
+				FD65E9BB239FC63B002F2035 /* XMPPMUCSub.h in Headers */,
 				0D44BB0D1E5370ED000930E0 /* XMPP.h in Headers */,
 				0D44BB1B1E5370ED000930E0 /* XMPPModule.h in Headers */,
 				0D44BB731E537110000930E0 /* XMPPTimer.h in Headers */,
@@ -3357,6 +3377,7 @@
 				D9DCD5271E6256D90010D1C7 /* XMPPStringPrep.h in Headers */,
 				D9DCD5281E6256D90010D1C7 /* XMPPParser.h in Headers */,
 				D9DCD5291E6256D90010D1C7 /* XMPPInternal.h in Headers */,
+				FD65E9BD239FD2F3002F2035 /* XMPPMUCSub.h in Headers */,
 				D9DCD52A1E6256D90010D1C7 /* XMPP.h in Headers */,
 				D9DCD52B1E6256D90010D1C7 /* XMPPModule.h in Headers */,
 				D9DCD52C1E6256D90010D1C7 /* XMPPTimer.h in Headers */,
@@ -3530,6 +3551,7 @@
 				D9DCD68A1E6258CF0010D1C7 /* XMPPStringPrep.h in Headers */,
 				D9DCD68B1E6258CF0010D1C7 /* XMPPParser.h in Headers */,
 				D9DCD68C1E6258CF0010D1C7 /* XMPPInternal.h in Headers */,
+				FD65E9BF239FD2F4002F2035 /* XMPPMUCSub.h in Headers */,
 				D9DCD68D1E6258CF0010D1C7 /* XMPP.h in Headers */,
 				D9DCD68E1E6258CF0010D1C7 /* XMPPModule.h in Headers */,
 				D9DCD68F1E6258CF0010D1C7 /* XMPPTimer.h in Headers */,
@@ -3714,6 +3736,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 			);
 			mainGroup = 0D44BAE01E537066000930E0;
@@ -4134,6 +4157,7 @@
 				D9DCD2841E6250930010D1C7 /* XMPPIQ+JabberRPC.m in Sources */,
 				D9DCD2E11E6250930010D1C7 /* NSString+XEP_0106.m in Sources */,
 				D9DCD2DD1E6250930010D1C7 /* XMPPSoftwareVersion.m in Sources */,
+				FD65E9BC239FC63B002F2035 /* XMPPMUCSub.m in Sources */,
 				D9DCD28A1E6250930010D1C7 /* XMPPIQ+LastActivity.m in Sources */,
 				D9DCD2B31E6250930010D1C7 /* XMPPvCardCoreDataStorageObject.m in Sources */,
 				D9DCD2B51E6250930010D1C7 /* XMPPvCardTempCoreDataStorageObject.m in Sources */,
@@ -4352,6 +4376,7 @@
 				D9DCD4801E6256D90010D1C7 /* XMPPIQ+JabberRPC.m in Sources */,
 				D9DCD4811E6256D90010D1C7 /* NSString+XEP_0106.m in Sources */,
 				D9DCD4821E6256D90010D1C7 /* XMPPSoftwareVersion.m in Sources */,
+				FD65E9BE239FD2F3002F2035 /* XMPPMUCSub.m in Sources */,
 				D9DCD4831E6256D90010D1C7 /* XMPPIQ+LastActivity.m in Sources */,
 				D9DCD4841E6256D90010D1C7 /* XMPPvCardCoreDataStorageObject.m in Sources */,
 				D9DCD4851E6256D90010D1C7 /* XMPPvCardTempCoreDataStorageObject.m in Sources */,
@@ -4516,6 +4541,7 @@
 				D9DCD5E31E6258CF0010D1C7 /* XMPPIQ+JabberRPC.m in Sources */,
 				D9DCD5E41E6258CF0010D1C7 /* NSString+XEP_0106.m in Sources */,
 				D9DCD5E51E6258CF0010D1C7 /* XMPPSoftwareVersion.m in Sources */,
+				FD65E9C0239FD2F4002F2035 /* XMPPMUCSub.m in Sources */,
 				D9DCD5E61E6258CF0010D1C7 /* XMPPIQ+LastActivity.m in Sources */,
 				D9DCD5E71E6258CF0010D1C7 /* XMPPvCardCoreDataStorageObject.m in Sources */,
 				D9DCD5E81E6258CF0010D1C7 /* XMPPvCardTempCoreDataStorageObject.m in Sources */,
