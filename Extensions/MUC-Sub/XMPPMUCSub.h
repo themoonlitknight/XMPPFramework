@@ -297,6 +297,11 @@ typedef void (^XMPPCompletionBlock)(NSError * _Nullable);
 **/
 - (void)xmppMUCSub:(nonnull XMPPMUCSub *)sender didReceivePresence:(nonnull XMPPPresence *)presence;
 
+- (void)xmppMUCSub:(nonnull XMPPMUCSub *)sender didReceiveAffiliation:(nonnull XMPPMessage *)affiliation;
+
+- (void)xmppMUCSub:(nonnull XMPPMUCSub *)sender didReceiveSubject:(nonnull XMPPMessage *)subject;
+
+
 /**
  * Called when the MUC-Sub service is supported by a specific room. This is a response to
  * a client calling `[XMPPMUCSub supportedBy:]`.

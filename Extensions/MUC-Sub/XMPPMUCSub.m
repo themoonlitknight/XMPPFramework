@@ -175,7 +175,7 @@ static int XMPPIDTrackerTimout = 60;
     dispatch_block_t block = ^{ @autoreleasepool {
         NSString* usedNick = nick;
         if (nil == nick) {
-            usedNick = user.bare;
+            usedNick = user.user;
         }
         
         // Build the request from the inside out.
@@ -184,6 +184,18 @@ static int XMPPIDTrackerTimout = 60;
         
         NSXMLElement *presence = [NSXMLElement elementWithName:@"event"];
         [presence addAttributeWithName:@"node" stringValue:@"urn:xmpp:mucsub:nodes:presence"];
+        
+        NSXMLElement *affiliations = [NSXMLElement elementWithName:@"event"];
+        [affiliations addAttributeWithName:@"node" stringValue:@"urn:xmpp:mucsub:nodes:affiliations"];
+        
+        NSXMLElement *subscribers = [NSXMLElement elementWithName:@"event"];
+        [subscribers addAttributeWithName:@"node" stringValue:@"urn:xmpp:mucsub:nodes:subscribers"];
+        
+        NSXMLElement *config = [NSXMLElement elementWithName:@"event"];
+        [config addAttributeWithName:@"node" stringValue:@"urn:xmpp:mucsub:nodes:config"];
+        
+        NSXMLElement *subject = [NSXMLElement elementWithName:@"event"];
+        [subject addAttributeWithName:@"node" stringValue:@"urn:xmpp:mucsub:nodes:subject"];
         
         
         NSXMLElement *subscribe = [NSXMLElement elementWithName:@"subscribe" xmlns:XMPPMUCSubNamespace];
@@ -199,6 +211,10 @@ static int XMPPIDTrackerTimout = 60;
 
         [subscribe addChild:messages];
         [subscribe addChild:presence];
+        [subscribe addChild:affiliations];
+        [subscribe addChild:subscribers];
+        [subscribe addChild:config];
+        [subscribe addChild:subject];
         
         XMPPIQ *iq = [XMPPIQ iqWithType:@"set" elementID:iqId];
         // Current user in from is always correct. Either as self or as moderator.
@@ -640,8 +656,10 @@ static int XMPPIDTrackerTimout = 60;
     
     static NSString *messagesEvent = @"messages";
     static NSString *presenceEvent = @"presence";
+    static NSString *affiliationsEvent = @"affiliations";
+    static NSString *subjectEvent = @"subject";
     
-    NSArray<NSString *> *events = @[messagesEvent, presenceEvent];
+    NSArray<NSString *> *events = @[messagesEvent, presenceEvent, affiliationsEvent, subjectEvent];
     NSString *event = nil;
     for (event in events) {
         if ((items = [XMPPMUCSub findMUCSubItemsElement:message forEvent:event])) {
@@ -670,6 +688,14 @@ static int XMPPIDTrackerTimout = 60;
                 else if ([event isEqualToString:presenceEvent]) {
                     XMPPPresence *p = [XMPPPresence presenceFromElement:(NSXMLElement *)node];
                     [multicastDelegate xmppMUCSub:self didReceivePresence:p];
+                }
+                else if ([event isEqualToString:affiliationsEvent]) {
+                    XMPPMessage *m = [XMPPMessage messageFromElement:(NSXMLElement *)node];
+                    [multicastDelegate xmppMUCSub:self didReceiveAffiliation:m];
+                }
+                else if ([event isEqualToString:subjectEvent]) {
+                    XMPPMessage *m = [XMPPMessage messageFromElement:(NSXMLElement *)node];
+                    [multicastDelegate xmppMUCSub:self didReceiveSubject:m];
                 }
             }
         }};
